@@ -188,12 +188,6 @@ const Header = () => {
             >
               Recipes
             </Link>
-            <button 
-              onClick={() => handleNavClick('/contact', 'wholesale')}
-              className="nav-link-hover py-1 transition-colors hover:text-maroon text-left uppercase"
-            >
-              Wholesale
-            </button>
             <Link 
               to="/contact"
               className={`nav-link-hover py-1 transition-colors hover:text-maroon ${
@@ -241,12 +235,6 @@ const Header = () => {
               >
                 Recipes
               </Link>
-              <button 
-                onClick={() => handleNavClick('/contact', 'wholesale')}
-                className="py-2 border-b border-maroon/5 hover:text-maroon text-left uppercase font-bold"
-              >
-                Wholesale
-              </button>
               <Link 
                 to="/contact" 
                 className="py-2 border-b border-maroon/5 hover:text-maroon transition-colors"
