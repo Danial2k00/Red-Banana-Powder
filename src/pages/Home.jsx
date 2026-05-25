@@ -23,24 +23,24 @@ const Home = () => {
   };
 
   return (
-    <div className="w-full space-y-16 animate-fade-in bg-floral-pattern pb-8">
+    <div className="w-full space-y-8 md:space-y-16 animate-fade-in bg-floral-pattern pb-8">
       {/* 1. Hero Banner */}
       <HeroBanner />
 
       {/* 2. Category Strip */}
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="bg-white rounded-3xl p-6 border border-maroon/5 shadow-blush-sm flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="bg-white rounded-3xl p-5 md:p-6 border border-maroon/5 shadow-blush-sm flex flex-col md:flex-row items-center justify-between gap-6 py-8 px-4 md:py-6 md:px-6">
           <div className="text-center md:text-left space-y-1 min-w-[200px]">
-            <h3 className="font-heading font-black text-lg text-maroon uppercase tracking-wider">Quick Categories</h3>
+            <h3 className="font-heading font-black text-xl md:text-lg text-maroon uppercase tracking-wider">Quick Categories</h3>
             <p className="text-xs text-darkbrown/50 font-semibold">Select an option to refine your search</p>
           </div>
           
-          <div className="flex-1 w-full overflow-x-auto hide-scrollbar flex items-center gap-3 py-1">
+          <div className="flex-1 w-full flex flex-wrap md:flex-nowrap justify-center md:justify-start gap-2.5 md:gap-3 py-1 overflow-x-auto hide-scrollbar">
             {categories.map((cat, idx) => (
               <button
                 key={idx}
                 onClick={() => handleCategoryClick(cat)}
-                className="flex-shrink-0 bg-cream/70 hover:bg-maroon hover:text-white border border-maroon/15 hover:border-gold px-6 py-2.5 rounded-full text-xs font-black text-maroon transition-all duration-300 hover:shadow-blush-sm uppercase tracking-wider"
+                className="flex-shrink-0 bg-cream/70 hover:bg-maroon hover:text-white border border-maroon/15 hover:border-gold px-4 py-2 md:px-6 md:py-2.5 rounded-full text-[13px] md:text-xs font-black text-maroon transition-all duration-300 hover:shadow-blush-sm uppercase tracking-wider"
               >
                 {cat === 'All Products' ? 'Show All' : cat}
               </button>
@@ -50,14 +50,14 @@ const Home = () => {
       </div>
 
       {/* Benefits section (Anchor target for header nav) */}
-      <section id="benefits" className="max-w-7xl mx-auto px-6 scroll-mt-24">
-        <div className="bg-blush/40 rounded-3xl p-8 md:p-12 border border-maroon/5 flex flex-col lg:flex-row gap-10 items-center">
+      <section id="benefits" className="max-w-7xl mx-auto px-4 md:px-6 scroll-mt-24 py-8 md:py-16">
+        <div className="bg-blush/40 rounded-3xl p-5 md:p-12 border border-maroon/5 flex flex-col lg:flex-row gap-10 items-center">
           <div className="w-full lg:w-1/2 space-y-6">
             <span className="text-xs font-black text-gold uppercase tracking-[0.2em] flex items-center gap-2">
               <HeartPulse className="w-4 h-4 text-maroon animate-pulse" />
               Royal Health Traditions
             </span>
-            <h2 className="text-3.5xl font-black font-heading text-maroon leading-tight">
+            <h2 className="text-2xl md:text-3.5xl font-black font-heading text-maroon leading-tight">
               Why Is Red Banana Powder A Natural Superfood?
             </h2>
             <p className="text-sm text-darkbrown/70 leading-relaxed font-medium">
@@ -83,9 +83,9 @@ const Home = () => {
             
             <button 
               onClick={() => navigate('/products')}
-              className="bg-maroon hover:bg-maroon-hover text-white text-xs font-bold px-8 py-3.5 rounded-full border border-gold hover:shadow-gold-glow flex items-center gap-2 group transition-all duration-300 uppercase tracking-widest"
+              className="w-full md:w-auto bg-maroon hover:bg-maroon-hover text-white text-xs font-bold px-8 py-3.5 rounded-full border border-gold hover:shadow-gold-glow flex items-center justify-center gap-2 group transition-all duration-300 uppercase tracking-widest min-h-[44px]"
             >
-              Shop Our Superfoods
+              <span>Shop Our Superfoods</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
             </button>
           </div>
@@ -106,8 +106,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 4. Featured Products */}
-      <section className="max-w-7xl mx-auto px-6 space-y-8">
+      {/* 4. Featured Products (2 columns on mobile) */}
+      <section className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-16 space-y-8">
         <div className="text-center space-y-2">
           <span className="text-xs font-bold text-gold uppercase tracking-[0.2em]">Our Signature Selection</span>
           <h2 className="text-2xl md:text-3.5xl font-black font-heading text-maroon">
@@ -116,7 +116,7 @@ const Home = () => {
           <div className="w-12 h-1 bg-gold mx-auto rounded-full" />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {featuredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
@@ -125,7 +125,7 @@ const Home = () => {
         <div className="text-center pt-4">
           <button
             onClick={() => navigate('/products')}
-            className="inline-flex items-center gap-1.5 text-xs font-black text-maroon hover:text-gold transition-colors duration-300 border border-maroon/30 hover:border-gold px-8 py-3.5 rounded-full uppercase tracking-wider bg-white shadow-blush-sm"
+            className="w-full md:w-auto inline-flex items-center justify-center gap-1.5 text-xs font-black text-maroon hover:text-gold transition-colors duration-300 border border-maroon/30 hover:border-gold px-8 py-3.5 rounded-full uppercase tracking-wider bg-white shadow-blush-sm min-h-[44px]"
           >
             Show All Products
             <ArrowRight className="w-4 h-4" />
@@ -134,8 +134,8 @@ const Home = () => {
       </section>
 
       {/* 5. Why Choose Us */}
-      <section className="bg-cream py-16 border-y border-maroon/5 bg-floral-pattern">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <section className="bg-cream py-8 md:py-16 border-y border-maroon/5 bg-floral-pattern">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           
           <div className="bg-white rounded-2xl p-6 border border-maroon/5 shadow-blush-sm text-center space-y-4 hover:-translate-y-1 transition-transform duration-300">
             <div className="w-12 h-12 bg-blush rounded-xl flex items-center justify-center text-maroon mx-auto border border-maroon/10">
@@ -171,7 +171,7 @@ const Home = () => {
       </section>
 
       {/* 6. Testimonials */}
-      <section className="max-w-7xl mx-auto px-6 space-y-10">
+      <section className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-16 space-y-10">
         <div className="text-center space-y-2">
           <span className="text-xs font-bold text-gold uppercase tracking-[0.2em]">Customer Stories</span>
           <h2 className="text-2xl md:text-3.5xl font-black font-heading text-maroon">

@@ -60,12 +60,12 @@ const InstagramSection = () => {
           <div className="w-12 h-1 bg-gold mx-auto rounded-full" />
         </div>
 
-        {/* Posts Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        {/* Posts Grid (Horizontal scroll on mobile, Grid on desktop) */}
+        <div className="flex overflow-x-auto lg:grid lg:grid-cols-4 gap-4 md:gap-6 snap-x snap-mandatory hide-scrollbar pb-4 select-none">
           {mockPosts.map((post) => (
             <div
               key={post.id}
-              className="group relative aspect-square rounded-2xl overflow-hidden border-4 border-white shadow-blush-sm hover:shadow-blush-md transition-all duration-300 cursor-pointer bg-cream"
+              className="w-[200px] h-[200px] shrink-0 snap-start lg:w-auto lg:h-auto lg:aspect-square group relative rounded-2xl overflow-hidden border-4 border-white shadow-blush-sm hover:shadow-blush-md transition-all duration-300 cursor-pointer bg-cream"
             >
               {/* Image */}
               <img

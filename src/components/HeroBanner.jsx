@@ -53,33 +53,33 @@ const HeroBanner = () => {
   };
 
   return (
-    <div className="relative w-full h-[500px] md:h-[600px] overflow-hidden bg-cream border-b border-maroon/5 bg-floral-pattern">
+    <div className="relative w-full h-[640px] md:h-[600px] overflow-hidden bg-cream border-b border-maroon/5 bg-floral-pattern">
       {/* Slides */}
       {slides.map((slide, index) => (
         <div
           key={index}
-          className={`absolute inset-0 w-full h-full flex flex-col md:flex-row items-center justify-between px-6 md:px-16 py-12 transition-all duration-1000 ease-in-out ${
+          className={`absolute inset-0 w-full h-full flex flex-col md:flex-row items-center justify-between px-5 md:px-16 py-6 md:py-12 transition-all duration-1000 ease-in-out ${
             index === current 
               ? 'opacity-100 translate-x-0 z-10' 
               : 'opacity-0 translate-x-8 -z-10'
           } ${slide.bg}`}
         >
           {/* Left: Content */}
-          <div className="w-full md:w-1/2 flex flex-col justify-center space-y-4 md:space-y-6 text-left mt-6 md:mt-0 max-w-xl">
-            <span className="text-xs md:text-sm font-bold text-gold uppercase tracking-[0.25em] animate-slide-up">
+          <div className="w-full md:w-1/2 flex flex-col justify-center space-y-4 md:space-y-6 text-left px-5 md:px-0 max-w-xl">
+            <span className="text-[11px] md:text-sm font-bold text-gold uppercase tracking-[0.05em] md:tracking-[0.25em] animate-slide-up">
               {slide.subtitle}
             </span>
-            <h1 className="text-3.5xl md:text-5xl lg:text-6xl font-black font-heading text-maroon leading-tight animate-slide-up">
+            <h1 className="text-[28px] md:text-5xl lg:text-6xl font-black font-heading text-maroon leading-tight md:leading-tight animate-slide-up">
               {slide.title}
             </h1>
-            <p className="text-sm md:text-base text-darkbrown/70 leading-relaxed font-medium animate-slide-up">
+            <p className="text-[14px] md:text-base text-darkbrown/70 leading-[1.6] md:leading-relaxed font-medium animate-slide-up">
               {slide.description}
             </p>
 
-            <div className="pt-2 animate-slide-up">
+            <div className="pt-2 mt-5 md:mt-0 animate-slide-up">
               <button
                 onClick={() => navigate('/products')}
-                className="bg-maroon hover:bg-maroon-hover text-white font-bold px-8 py-3.5 rounded-full border border-gold hover:shadow-gold-glow flex items-center gap-2 group transition-all duration-300 uppercase tracking-widest text-xs"
+                className="w-full md:w-auto bg-maroon hover:bg-maroon-hover text-white font-bold px-5 py-3.5 md:py-3.5 md:px-8 rounded-full border border-gold hover:shadow-gold-glow flex items-center justify-center gap-2 group transition-all duration-300 uppercase tracking-widest text-[13px] md:text-xs"
               >
                 {slide.cta}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
@@ -88,12 +88,12 @@ const HeroBanner = () => {
           </div>
 
           {/* Right: Mock Product Image */}
-          <div className="w-full md:w-1/2 h-full flex items-center justify-center relative mt-6 md:mt-0">
-            <div className="w-[280px] md:w-[420px] aspect-square rounded-3xl overflow-hidden border-2 border-gold/20 shadow-blush-lg bg-white relative p-4 group transition-all duration-500 hover:rotate-1 hover:scale-[1.02]">
+          <div className="w-full md:w-1/2 flex items-center justify-center relative mt-4 md:mt-0">
+            <div className="w-full max-w-[320px] md:w-[420px] h-[220px] md:h-auto aspect-auto md:aspect-square rounded-2xl md:rounded-3xl overflow-hidden border-2 border-gold/20 shadow-blush-lg bg-white relative p-4 group transition-all duration-500 hover:rotate-1 hover:scale-[1.02]">
               <img
                 src={slide.image}
                 alt={slide.title}
-                className="w-full h-full object-cover rounded-2xl"
+                className="w-full h-full object-cover rounded-xl md:rounded-2xl"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-maroon/5 via-transparent to-transparent pointer-events-none" />
             </div>
@@ -101,31 +101,49 @@ const HeroBanner = () => {
         </div>
       ))}
 
-      {/* Manual Arrow Controls */}
+      {/* Manual Arrow Controls (Desktop Side, Mobile Bottom Centered) */}
       <button
         onClick={handlePrev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/70 hover:bg-white text-maroon border border-maroon/10 shadow-sm hover:scale-105 transition-all z-20"
+        className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/70 hover:bg-white text-maroon border border-maroon/10 shadow-sm hover:scale-105 transition-all z-20"
         aria-label="Previous slide"
       >
         <ChevronLeft className="w-5 h-5" />
       </button>
       <button
         onClick={handleNext}
-        className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/70 hover:bg-white text-maroon border border-maroon/10 shadow-sm hover:scale-105 transition-all z-20"
+        className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/70 hover:bg-white text-maroon border border-maroon/10 shadow-sm hover:scale-105 transition-all z-20"
         aria-label="Next slide"
       >
         <ChevronRight className="w-5 h-5" />
       </button>
 
-      {/* Slide Indicators */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2.5 z-20">
+      {/* Mobile-only Centered Arrows Row */}
+      <div className="flex md:hidden justify-center gap-4 w-full absolute bottom-12 left-0 right-0 z-20">
+        <button
+          onClick={handlePrev}
+          className="w-9 h-9 rounded-full bg-white border border-maroon/10 shadow-sm flex items-center justify-center text-maroon text-sm hover:scale-105 active:scale-95 transition-all"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="w-4 h-4" />
+        </button>
+        <button
+          onClick={handleNext}
+          className="w-9 h-9 rounded-full bg-white border border-maroon/10 shadow-sm flex items-center justify-center text-maroon text-sm hover:scale-105 active:scale-95 transition-all"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="w-4 h-4" />
+        </button>
+      </div>
+
+      {/* Slide Indicators (Desktop Bottom, Mobile Bottom) */}
+      <div className="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2.5 z-20">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrent(index)}
-            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+            className={`w-2 h-2 md:w-2.5 md:h-2.5 rounded-full transition-all duration-300 ${
               index === current 
-                ? 'bg-maroon w-7 shadow-sm' 
+                ? 'bg-maroon w-5 md:w-7 shadow-sm' 
                 : 'bg-maroon/30 hover:bg-maroon/50'
             }`}
             aria-label={`Go to slide ${index + 1}`}
