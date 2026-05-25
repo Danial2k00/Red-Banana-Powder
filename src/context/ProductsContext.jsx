@@ -1,46 +1,70 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { ref, onValue, push, update, remove } from 'firebase/database';
+import { db } from '../firebase/config';
 import { products as defaultProducts } from '../data/products';
 
 const ProductsContext = createContext(null);
 
 export const ProductsProvider = ({ children }) => {
-  const [products, setProducts] = useState(() => {
-    const saved = localStorage.getItem('rbp_products');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        console.error('Failed to parse saved products from localStorage:', e);
-      }
-    }
-    return defaultProducts;
-  });
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Sync to localStorage
+  // Mount listener for real-time changes
   useEffect(() => {
-    localStorage.setItem('rbp_products', JSON.stringify(products));
-  }, [products]);
+    const productsRef = ref(db, 'products');
+    
+    const unsubscribe = onValue(productsRef, (snapshot) => {
+      const dataVal = snapshot.val();
+      
+      // Auto-seeding logic if database is empty on first query
+      if (!dataVal) {
+        defaultProducts.forEach((product) => {
+          const { id, ...cleanProduct } = product;
+          push(productsRef, {
+            ...cleanProduct,
+            createdAt: Date.now()
+          });
+        });
+        setProducts([]);
+        setIsLoading(false);
+        return;
+      }
+      
+      const parsedList = Object.entries(dataVal).map(([id, data]) => ({
+        id,
+        ...data
+      }));
+
+      // Sort by creation date so new additions sit at the top
+      parsedList.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+      setProducts(parsedList);
+      setIsLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const addProduct = (newProduct) => {
-    const productWithId = {
+    const productsRef = ref(db, 'products');
+    push(productsRef, {
       ...newProduct,
-      id: Date.now().toString()
-    };
-    setProducts((prev) => [productWithId, ...prev]);
+      createdAt: Date.now()
+    });
   };
 
-  const updateProduct = (updatedProduct) => {
-    setProducts((prev) => 
-      prev.map((product) => (product.id === updatedProduct.id ? updatedProduct : product))
-    );
+  const updateProduct = (id, updatedProduct) => {
+    const productRef = ref(db, `products/${id}`);
+    update(productRef, updatedProduct);
   };
 
   const deleteProduct = (id) => {
-    setProducts((prev) => prev.filter((product) => product.id !== id));
+    const productRef = ref(db, `products/${id}`);
+    remove(productRef);
   };
 
   return (
-    <ProductsContext.Provider value={{ products, addProduct, updateProduct, deleteProduct }}>
+    <ProductsContext.Provider value={{ products, addProduct, updateProduct, deleteProduct, isLoading }}>
       {children}
     </ProductsContext.Provider>
   );

@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 
 const AdminProducts = () => {
-  const { products: productList, addProduct, updateProduct, deleteProduct } = useProducts();
+  const { products: productList, addProduct, updateProduct, deleteProduct, isLoading } = useProducts();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All Products');
   const [showAddDrawer, setShowAddDrawer] = useState(false);
@@ -88,12 +88,12 @@ const AdminProducts = () => {
     if (isEditing) {
       // Edit Mode Save
       const currentProduct = productList.find(p => p.id === editingProductId) || {};
-      updateProduct({
+      updateProduct(editingProductId, {
         ...currentProduct,
         name: newName,
         price: Number(newPrice),
         category: newCategory,
-        badge: newBadge || undefined,
+        badge: newBadge || '',
         image: image || 'https://placehold.co/600x600/7B1C2E/FFF8F5?text=Product',
         description,
         discount,
@@ -203,7 +203,16 @@ const AdminProducts = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-blush-dark/10">
-              {filteredProducts.length === 0 ? (
+              {isLoading ? (
+                <tr>
+                  <td colSpan="6" className="py-16 text-center">
+                    <div className="flex flex-col items-center justify-center gap-3">
+                      <div className="w-8 h-8 border-4 border-maroon/20 border-t-maroon rounded-full animate-spin"></div>
+                      <p className="text-xs font-bold text-darkbrown-light/60">Fetching inventory from Firebase...</p>
+                    </div>
+                  </td>
+                </tr>
+              ) : filteredProducts.length === 0 ? (
                 <tr>
                   <td colSpan="6" className="py-12 text-center text-sm font-semibold text-darkbrown-light/50">
                     No products found matching filters.

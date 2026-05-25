@@ -6,7 +6,7 @@ import { categories } from '../data/products';
 import { useProducts } from '../context/ProductsContext';
 
 const Products = () => {
-  const { products } = useProducts();
+  const { products, isLoading } = useProducts();
   const [searchParams, setSearchParams] = useSearchParams();
   
   // States for filters
@@ -213,7 +213,12 @@ const Products = () => {
 
         {/* Right Content Area: Product Grid */}
         <div className="lg:col-span-3">
-          {filteredProducts.length === 0 ? (
+          {isLoading ? (
+            <div className="flex flex-col items-center justify-center py-20 gap-4 bg-white rounded-3xl border border-maroon/5 shadow-blush-sm">
+              <div className="w-12 h-12 border-4 border-maroon/20 border-t-maroon rounded-full animate-spin"></div>
+              <p className="text-sm font-bold text-darkbrown/60">Loading organic catalogue...</p>
+            </div>
+          ) : filteredProducts.length === 0 ? (
             <div className="bg-white rounded-3xl p-16 border border-maroon/5 shadow-blush-sm text-center space-y-4 max-w-xl mx-auto mt-8">
               <div className="w-16 h-16 bg-blush text-maroon rounded-full flex items-center justify-center mx-auto text-xl font-bold border border-maroon/10">!</div>
               <h3 className="text-lg font-bold font-heading text-maroon">No matching superfoods found</h3>
