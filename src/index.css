@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  /* Elegant custom scrollbar in maroon/cream */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #FFF8F5;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #7B1C2E;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #C8992A;
+  }
+}
+
+@layer components {
+  /* Elegant glassmorphism panels */
+  .glass-card {
+    background: rgba(255, 248, 245, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(123, 28, 46, 0.05);
+  }
+
+  /* Watercolor wash behind logo */
+  .watercolor-logo-bg {
+    position: relative;
+  }
+  .watercolor-logo-bg::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 140px;
+    height: 80px;
+    background: radial-gradient(circle, rgba(162, 217, 206, 0.4) 0%, rgba(212, 239, 223, 0.25) 50%, rgba(255, 255, 255, 0) 70%);
+    filter: blur(8px);
+    z-index: -1;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  /* Custom shadow layers */
+  .shadow-blush-sm {
+    box-shadow: 0 2px 8px rgba(123, 28, 46, 0.03);
+  }
+  .shadow-blush-normal {
+    box-shadow: 0 6px 20px rgba(123, 28, 46, 0.05);
+  }
+  .shadow-blush-heavy {
+    box-shadow: 0 12px 35px rgba(123, 28, 46, 0.08);
+  }
+
+  /* PCJ-style subtle page background pattern overlay */
+  .bg-floral-pattern {
+    background-image: radial-gradient(rgba(198, 153, 42, 0.03) 1px, transparent 0);
+    background-size: 24px 24px;
+  }
+}
+
+/* Custom styles for slides and drawer items */
+.slide-active {
+  opacity: 1;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.slide-inactive {
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+
+/* Scroll snap lists for categories */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Beautiful hover lines for navbar links */
+.nav-link-hover {
+  position: relative;
+}
+.nav-link-hover::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: #C8992A;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+.nav-link-hover:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* Smooth active state navigation bar styling */
+.nav-link-active {
+  color: #7B1C2E;
+  font-weight: 700;
+}
+.nav-link-active::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(1);
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: #7B1C2E;
+}
