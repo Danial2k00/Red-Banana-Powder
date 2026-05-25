@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { SlidersHorizontal, ArrowUpDown, RefreshCw, X, Star } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
-import { products, categories } from '../data/products';
+import { categories } from '../data/products';
+import { useProducts } from '../context/ProductsContext';
 
 const Products = () => {
+  const { products } = useProducts();
   const [searchParams, setSearchParams] = useSearchParams();
   
   // States for filters

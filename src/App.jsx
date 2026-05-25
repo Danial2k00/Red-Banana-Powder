@@ -4,6 +4,7 @@ import { CartProvider } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
 import { AuthProvider } from './context/AuthContext';
 import { AdminAuthProvider } from './admin/AdminAuthContext';
+import { ProductsProvider } from './context/ProductsContext';
 import AdminProtectedRoute from './admin/AdminProtectedRoute';
 
 // Components
@@ -68,9 +69,10 @@ function App() {
   return (
     <Router>
       <AdminAuthProvider>
-        <AuthProvider>
-          <WishlistProvider>
-            <CartProvider>
+        <ProductsProvider>
+          <AuthProvider>
+            <WishlistProvider>
+              <CartProvider>
               
               {/* Scroll reset */}
               <ScrollToTop />
@@ -105,9 +107,10 @@ function App() {
                 </Route>
               </Routes>
 
-            </CartProvider>
-          </WishlistProvider>
-        </AuthProvider>
+              </CartProvider>
+            </WishlistProvider>
+          </AuthProvider>
+        </ProductsProvider>
       </AdminAuthProvider>
     </Router>
   );

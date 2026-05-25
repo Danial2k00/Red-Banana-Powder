@@ -4,10 +4,12 @@ import { ShieldCheck, Truck, Leaf, Star, ArrowRight, Quote, HeartPulse } from 'l
 import HeroBanner from '../components/HeroBanner';
 import ProductCard from '../components/ProductCard';
 import InstagramSection from '../components/InstagramSection';
-import { products, categories } from '../data/products';
+import { categories } from '../data/products';
+import { useProducts } from '../context/ProductsContext';
 
 const Home = () => {
   const navigate = useNavigate();
+  const { products } = useProducts();
 
   // Filter 4 featured products for display
   const featuredProducts = products.slice(0, 4);

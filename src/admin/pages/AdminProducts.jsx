@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { products, categories } from '../../data/products';
+import { categories } from '../../data/products';
+import { useProducts } from '../../context/ProductsContext';
 import { 
   Search, 
   Plus, 
@@ -12,7 +13,7 @@ import {
 } from 'lucide-react';
 
 const AdminProducts = () => {
-  const [productList, setProductList] = useState(products);
+  const { products: productList, addProduct, updateProduct, deleteProduct } = useProducts();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All Products');
   const [showAddDrawer, setShowAddDrawer] = useState(false);
@@ -86,27 +87,22 @@ const AdminProducts = () => {
 
     if (isEditing) {
       // Edit Mode Save
-      setProductList(productList.map(product => {
-        if (product.id === editingProductId) {
-          return {
-            ...product,
-            name: newName,
-            price: Number(newPrice),
-            category: newCategory,
-            badge: newBadge || undefined,
-            image: image || 'https://placehold.co/600x600/7B1C2E/FFF8F5?text=Product',
-            description,
-            discount,
-            stock,
-            status
-          };
-        }
-        return product;
-      }));
+      const currentProduct = productList.find(p => p.id === editingProductId) || {};
+      updateProduct({
+        ...currentProduct,
+        name: newName,
+        price: Number(newPrice),
+        category: newCategory,
+        badge: newBadge || undefined,
+        image: image || 'https://placehold.co/600x600/7B1C2E/FFF8F5?text=Product',
+        description,
+        discount,
+        stock,
+        status
+      });
     } else {
       // Add Mode Save
       const newProduct = {
-        id: `rbp-${Date.now().toString().slice(-4)}`,
         name: newName,
         price: Number(newPrice),
         category: newCategory,
@@ -121,7 +117,7 @@ const AdminProducts = () => {
         status
       };
 
-      setProductList([newProduct, ...productList]);
+      addProduct(newProduct);
     }
 
     closeDrawer();
@@ -129,7 +125,7 @@ const AdminProducts = () => {
 
   const handleDeleteProduct = (id) => {
     if (window.confirm('Are you sure you want to remove this product from inventory?')) {
-      setProductList(productList.filter(p => p.id !== id));
+      deleteProduct(id);
     }
   };
 
